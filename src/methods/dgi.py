@@ -55,6 +55,9 @@ class DGI(BaseMethod):
         # 4. get loss
         loss = self.get_loss(h_pos, h_neg, s)
         return loss
+    
+    def get_embs(self, data):
+        return self.encoder(data).detach()
 
 
 class DGIEncoder(torch.nn.Module):
