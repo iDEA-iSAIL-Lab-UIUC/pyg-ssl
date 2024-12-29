@@ -1,0 +1,25 @@
+use_cuda : True
+gpu_idx : 0
+torch_seed: 1
+model:
+  dropout: 0.5 
+  n_layers: 3
+  in_channels: 3703
+  hidden_channels: 32
+  aug_type: 'mask'
+optim:
+  base_lr: 0.00015
+  name : adam
+  max_epoch : 10
+  patience : 10
+  weight_decay : 0.000
+classifier:
+  base_lr: 0.01
+  name : adam
+  max_epoch : 300
+  patience : 100
+  weight_decay : 0.000
+dataset:
+  name : IMDB-M
+  root : pyg_data
+  batch_size: 128

@@ -1,0 +1,27 @@
+use_cuda : True
+gpu_idx : 0
+torch_seed: 0
+model:
+  dropout: 0.5 
+  n_layers: 3
+  in_channels: 3703
+  hidden_channels: 32
+  aug_type: 'mask'
+optim:
+  base_lr: 0.001
+  name : adam
+  max_epoch : 20
+  patience : 10
+  weight_decay : 0.0
+classifier:
+  base_lr: 0.01
+  name : adam
+  max_epoch : 200
+  patience : 100
+  run : 10
+  weight_decay : 0.00
+dataset:
+  name : mutag
+  root : pyg_data
+  batch_size: 128
+

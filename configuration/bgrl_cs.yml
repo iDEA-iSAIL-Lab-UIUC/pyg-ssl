@@ -1,0 +1,25 @@
+use_cuda : True
+gpu_idx : 1
+model:
+  dropout: 0.5 
+  n_layers: 2 
+  in_channels: 1433
+  hidden_channels: 512
+  aug_mask_1: 0.1
+  aug_mask_2: 0.2
+  aug_edge_1: 0.4
+  aug_edge_2: 0.1
+optim:
+  base_lr: 0.0001
+  name : adam
+  max_epoch : 4000
+  patience : 1000
+  weight_decay : 0.00001
+  moving_average_decay: 0.99
+dataset:
+  name : cs
+  root : data_
+output:
+  verbose : True
+  save_dir : './saved_model'
+  interval : 100

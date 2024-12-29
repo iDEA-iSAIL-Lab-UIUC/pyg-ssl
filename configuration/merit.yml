@@ -1,0 +1,13 @@
+dataset: "wikics"
+torch_seed: 0
+drop_edge: 0.4
+drop_feat1: 0.4
+drop_feat2: 0.4
+projection_size: 512
+prediction_size: 512
+prediction_hidden_size: 4096
+projection_hidden_size: 4096
+beta: 0.6
+momentum: 0.8
+alpha: 0.05
+sample_size: 2000

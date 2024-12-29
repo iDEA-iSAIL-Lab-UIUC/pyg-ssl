@@ -1,0 +1,25 @@
+use_cuda : True
+gpu_idx : 0
+model:
+  dropout: 0.5 
+  n_layers: 2 
+  in_channels: 1433
+  hidden_channels: 512
+  topk: 4
+  num_centroids: 100
+  num_kmeans: 5
+  clus_num_iters: 20
+optim:
+  base_lr: 0.0001
+  name : adam
+  max_epoch : 5000
+  patience : 1000
+  weight_decay : 0.00001
+  moving_average_decay: 0.9
+dataset:
+  name : wikics
+  root : data_
+output:
+  verbose : True
+  save_dir : './saved_model'
+  interval : 100

@@ -1,0 +1,47 @@
+use_cuda : True
+gpu_idx : 0
+torch_seed: 0
+model:
+  dropout: 0.5
+  encoder_layers: 3
+  in_channels: 3703
+  hidden_channels: 32
+  aug_type: 'mask'
+  num_hidden: 32
+  decoder_layers: 2
+  lr: 0.0005
+  weight_decay: 0.00
+  mask_rate: 0.75
+  drop_edge_rate: 0.0
+  max_epoch: 20
+  encoder_type: gin
+  decoder_type: gin
+  activation: prelu
+  loss_fn: sce
+  scheduler: False
+  pooling: sum
+  batch_size: 64
+  alpha_l: 2
+  replace_rate: 0.1
+  norm: batchnorm
+  in_drop: 0.2
+  attn_drop: 0.1
+optim:
+  base_lr: 0.00015
+  name : adam
+  max_epoch : 50
+  patience : 10
+  weight_decay : 0.0
+classifier:
+  base_lr: 0.005
+  name : adam
+  max_epoch : 1000
+  patience : 150
+  run : 10
+  weight_decay : 0.00
+  loss_type : 'mse'
+dataset:
+  name : mutag
+  root : pyg_data
+  batch_size: 128
+

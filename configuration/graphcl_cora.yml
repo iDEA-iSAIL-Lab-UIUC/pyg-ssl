@@ -1,0 +1,24 @@
+use_cuda : True
+gpu_idx : 0
+model:
+  dropout: 0.5 
+  n_layers: 2 
+  in_channels: 1433
+  hidden_channels: 512
+  aug_type: 'mask'
+optim:
+  base_lr: 0.001
+  name : adam
+  max_epoch : 3000
+  patience : 1000
+  weight_decay : 0.0005
+dataset:
+  name : cora
+  root : pyg_data
+output:
+  verbose : True
+  save_dir : './saved_model'
+  interval : 100
+  aaa:
+    aaaa: 0
+    bbbb: 0

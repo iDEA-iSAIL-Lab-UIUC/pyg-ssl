@@ -1,0 +1,25 @@
+dataset: "wikics"
+root: "wikics"
+black_list: [4,5,6]
+lr: 0.001
+out_heads: 1
+task_type: Node_Transductive
+val_interval: 1
+num_hidden_features: 8
+to_undirected_at_neg: True
+epochs: 2000
+patience: 100
+w_loss1: 100
+w_loss2: 100
+w_loss3: 2
+margin1: 0.4
+margin2: 0.6
+dim: 128
+cfg: [512, 128]
+NewATop: 0
+dropout: 0.1
+NN: 5
+num1: 300
+wd: 0.0
+weight_decay: 0.0001
+in_channels: 300

@@ -1,0 +1,22 @@
+device: cuda:0
+model:
+  feat_drop: 0.3
+  attn_drop: 0.5
+  hidden_dim: 64
+  sample_rate: [7, 1]
+  tau: 0.8  # hyperparameter. Refer to the original paper for definition
+optim:
+  lr: 0.0008
+  max_epoch : 500
+  patience : 5
+dataset:
+  name : acm
+  root : datasets
+  target_type: 'paper'
+  P: 2  # number of meta-paths
+  nei_num: 1   # number of neighbors' types
+classifier:   # evaluation
+  base_lr: 0.07
+  weight_decay: 0
+  max_epoch: 100
+  n_run: 50
