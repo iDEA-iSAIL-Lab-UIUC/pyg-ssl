@@ -8,8 +8,6 @@ import numpy as np
 from src.config import load_yaml
 import os
 
-# config = load_yaml('./configuration/graphmae_mutag.yml')
-# config = load_yaml('./configuration/graphmae_imdb_b.yml')
 config = load_yaml('./configuration/graphmae_imdb_m.yml')
 torch.manual_seed(config.torch_seed)
 np.random.seed(config.torch_seed)

@@ -1,5 +1,5 @@
 dataset: "wikics"
-root: "wikics"
+root: "pyg_data"
 black_list: [4,5,6]
 lr: 0.001
 out_heads: 1

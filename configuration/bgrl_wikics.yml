@@ -18,7 +18,7 @@ optim:
   moving_average_decay: 0.99
 dataset:
   name : wikics
-  root : data_
+  root : pyg_data
 output:
   verbose : True
   save_dir : './saved_model'

@@ -12,21 +12,14 @@ from src.trainer.gca_trainer import GCATrainer
 from src.evaluation import LogisticRegression
 from src.utils import create_data
 
-# ---> load data
-# dataset_name = 'WikiCS'
 dataset_name = 'Amazon-Photo'
-# dataset_name = 'Coauthor-CS'
-path = os.path.expanduser('~/datasets')  # C:\Users\dongqif2\datasets
-path = os.path.join(path, dataset_name)  # C:\Users\dongqif2\datasets\WikiCS
-dataset = WikiCS(root=path, transform=T.NormalizeFeatures())
+dataset = WikiCS(root='pyg_data', transform=T.NormalizeFeatures())
 data_loader = DataLoader(dataset)
 if dataset_name == 'Amazon-Photo':
-    path = os.path.join(path, dataset_name)
-    dataset = Amazon(root=path, name='photo', transform=T.NormalizeFeatures())
+    dataset = Amazon(root='pyg_data', name='photo', transform=T.NormalizeFeatures())
     data_loader = DataLoader(dataset)
 if dataset_name == 'Coauthor-CS':
-    path = os.path.join(path, dataset_name)
-    dataset = Coauthor(root=path, name='cs', transform=T.NormalizeFeatures())
+    dataset = Coauthor(root='pyg_data', name='cs', transform=T.NormalizeFeatures())
     data_loader = DataLoader(dataset)
 
 

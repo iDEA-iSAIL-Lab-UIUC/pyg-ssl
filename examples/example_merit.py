@@ -1,10 +1,9 @@
-from src.augment import RandomMask, RandomDropEdge, RandomDropNode, AugmentSubgraph, AugmentorList
 from src.methods import GCN, Merit
 from src.trainer import SimpleTrainer
 from torch_geometric.loader import DataLoader
 import torch_geometric.transforms as T
 from src.transforms import NormalizeFeatures, GCNNorm, Edge2Adj, Compose
-from src.datasets import Planetoid, Amazon, WikiCS,Coauthor
+from src.datasets import Amazon, WikiCS,Coauthor
 from src.utils.create_data import create_masks
 from src.evaluation import LogisticRegression
 import torch 
@@ -29,7 +28,7 @@ elif data_name=="wikics": #82.0109
     nan_mask = torch.isnan(dataset[0].x)
     imputer = SimpleImputer()
     dataset[0].x = torch.tensor(imputer.fit_transform(dataset[0].x))
-# dataset = Planetoid(root="pyg_data", name="cora", pre_transform=pre_transforms)
+
 dataset = Amazon(root="pyg_data", name="photo", pre_transform=pre_transforms)
 data_loader = DataLoader(dataset)
 data = dataset.data
@@ -39,8 +38,6 @@ data = dataset.data
 encoder = GCN(in_ft=data.x.shape[1], out_ft=512, projection_hidden_size=config["projection_hidden_size"],
                   projection_size=config["projection_size"])
 method = Merit(encoder=encoder, data = data, config=config,device="cuda:0",is_sparse=True)
-# method.augment_type = aug_type
-
 
 # ------------------ Trainer --------------------
 trainer = SimpleTrainer(method=method, data_loader=data_loader, device="cuda:0")

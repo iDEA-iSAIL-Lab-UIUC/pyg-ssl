@@ -18,7 +18,7 @@ optim:
   moving_average_decay: 0.9
 dataset:
   name : photo
-  root : data_
+  root : pyg_data
 output:
   verbose : True
   save_dir : './saved_model'

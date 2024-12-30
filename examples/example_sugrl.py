@@ -1,4 +1,3 @@
-from src.augment import RandomMask, RandomDropEdge, RandomDropNode, AugmentSubgraph, AugmentorList
 from src.methods import SugrlMLP, SugrlGCN
 from src.methods import SUGRL
 from src.trainer import SimpleTrainer
@@ -18,10 +17,7 @@ torch.manual_seed(0)
 pre_transforms = Compose([NormalizeFeatures(ord=1), Edge2Adj(norm=GCNNorm(add_self_loops=1))])
 
 # load the configuration file
-# config = yaml.safe_load(open('./configuration/sugrl_wikics.yml', 'r', encoding='utf-8').read())
 config = yaml.safe_load(open("./configuration/sugrl_amazon.yml", 'r', encoding='utf-8').read())
-# config = yaml.safe_load(open("./configuration/sugrl_coauthor.yml", 'r', encoding='utf-8').read())
-# config = yaml.safe_load(open("./configuration/sugrl_cora.yml", 'r', encoding='utf-8').read())
 print(config)
 data_name = config['dataset']
 
@@ -43,14 +39,6 @@ elif data_name=="wikics": #82.0109
 data_loader = DataLoader(dataset)
 data = dataset.data
 
-# has_nan = torch.isnan(data.x).any()
-
-# if has_nan:
-#     print("The tensor contains NaN values.")
-# else:
-#     print("The tensor does not contain NaN values.")
-
-
 # ------------------- Method -----------------
 encoder_1 = SugrlMLP(in_channels=data.x.shape[1])
 encoder_2 = SugrlGCN(in_channels=data.x.shape[1])
@@ -59,7 +47,6 @@ method = SUGRL(encoder=[encoder_1,encoder_2],data = data, config=config,device="
 
 # ------------------ Trainer --------------------
 trainer = SimpleTrainer(method=method, data_loader=data_loader, device="cuda:0")
-# trainer = SUGRL(model=model, data_loader=data_loader,data=dataset[0], device="cuda:0")
 trainer.train()
 
 

@@ -19,6 +19,7 @@ PyG-SSL is a Python library built upon [PyTorch](https://pytorch.org) and [PyTor
 Generally, PyG-SSL have four components: Configuration, Method, Trainer and Evaluator. The user only needs to specify the configuration and write a simple script which calls the other components within this framework. The library will automatically run the method, train the model, and evaluate the results. The user can also customize the method, trainer, and evaluator to fit their own needs. We provide example configurations in the configuration folder , and example scripts in the root folder. The user can easily modify these configurations and scripts to run their own experiments.
 
 ## Installation
+While we provide requirements.txt for installing the dependencies with pip, sometimes pip is not able to resolve the dependencies correctly. We recommend using the following ways to build the environment.
 ### Directly use the source
 One way to use the source code is to clone the repository and install the dependencies. We recommend to create a new conda environment to prevent conflicts with other packages. 
 ```bash
@@ -29,16 +30,28 @@ pip install faiss-gpu
 pip install dgl -f https://data.dgl.ai/wheels/torch-2.3/cu121/repo.html
 pip install scikit-learn matplotlib seaborn yacs
 ```
-Then you are free to go with some basic examples.
+Then you are free to go with some basic examples. In the root directory of this repository, you can run the following command to test the installation.
 ```bash
+cp examples/example_dgi.py .
 python example_dgi.py
 ```
 
 ### Use our docker image
-
+We provide a docker image at https://hub.docker.com/r/violet24k/pyg-ssl for users to run the code easily. Our docker image is based on the official PyTorch docker image with pytorch 2.3.1, cuda 12.1 and python 3.10.14.
 
 ### Build from source
+We provide setup.py for users to build the package from source. You can run the following command to build the package.
+```bash
+conda create -n pyg-ssl python=3.9
+pip install -e .    # -e for editable mode so that you can taylor the code to your needs
+ 
 
+# test the installation
+python
+>>> import pyg_ssl
+>>> print(pyg_ssl.__version__)
+```
+Then you can run the example scripts in the root directory of this repository.
 
 ### Install from pip
 We are preparing the pip package and will release it soon.

@@ -21,7 +21,7 @@ classifier:
   weight_decay : 0.0005
 dataset:
   name : WikiCS
-  root : wikics
+  root : pyg_data
 output:
   verbose : True
   save_dir : './saved_model'
