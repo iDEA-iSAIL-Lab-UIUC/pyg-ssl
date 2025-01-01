@@ -1,6 +1,6 @@
 # pyg-ssl
 
-**[Documentation](https://pygssl-tutorial.readthedocs.io/en/latest/index.html)** | **[Paper](https://arxiv.org/abs/2404.00225)**
+**[Documentation](https://pygssl-tutorial.readthedocs.io/en/latest/index.html)** | **[Paper](https://arxiv.org/abs/2412.21151)**
 
 PyG-SSL is a Python library built upon [PyTorch](https://pytorch.org) and [PyTorch Geometric](https://pytorch-geometric.readthedocs.io/en/latest/). It integrates state-of-the-art algorithms for Self-Supervised Learning on Graphs and offers simple APIs to call the algorithms from a variety of high-quality research papers.
 
