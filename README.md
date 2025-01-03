@@ -61,6 +61,15 @@ We are preparing the pip package and will release it soon.
 If you find this repository useful in your research, please consider citing the following paper:
 
 ```
+@article{zheng2024pyg,
+  title={PyG-SSL: A Graph Self-Supervised Learning Toolkit},
+  author={Zheng, Lecheng and Jing, Baoyu and Li, Zihao and Zeng, Zhichen and Wei, Tianxin and Ai, Mengting and He, Xinrui and Liu, Lihui and Fu, Dongqi and You, Jiaxuan and others},
+  journal={arXiv preprint arXiv:2412.21151},
+  year={2024}
+}
+```
+
+```
 @inproceedings{DBLP:conf/kdd/ZhengJLTH24,
   author       = {Lecheng Zheng and
                   Baoyu Jing and
