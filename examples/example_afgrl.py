@@ -2,7 +2,7 @@ from src.augment import NeighborSearch_AFGRL
 from src.methods import AFGRLEncoder, AFGRL
 from src.trainer import NonContrastTrainer
 from torch_geometric.loader import DataLoader
-from src.datasets import Planetoid, Amazon, WikiCS
+from torch_geometric.datasets import Planetoid, Amazon, WikiCS
 from src.evaluation import LogisticRegression
 import torch, copy
 import torch_geometric

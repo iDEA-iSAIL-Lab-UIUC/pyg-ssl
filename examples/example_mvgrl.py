@@ -3,7 +3,7 @@ from src.methods import MVGRL, MVGRLEncoder
 from src.trainer import SimpleTrainer
 from torch_geometric.loader import DataLoader
 from src.transforms import NormalizeFeatures, GCNNorm, Edge2Adj, Compose
-from src.datasets import Planetoid, Amazon, WikiCS, Coauthor
+from torch_geometric.datasets import Planetoid, Amazon, WikiCS, Coauthor
 from src.evaluation import LogisticRegression
 import torch
 from src.config import load_yaml

@@ -1,7 +1,6 @@
 """TODO: remove this file."""
 
 from .base import Augmentor
-from src.data import Data
 
 
 class Echo(Augmentor):
@@ -9,5 +8,5 @@ class Echo(Augmentor):
     def __init__(self):
         super().__init__()
 
-    def apply(self, data: Data):
+    def apply(self, data):
         return data

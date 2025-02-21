@@ -1,5 +1,4 @@
 from .base import Augmentor
-from src.data import HomoData
 import copy
 import torch
 from scipy.linalg import fractional_matrix_power
@@ -11,7 +10,7 @@ class ComputePPR(Augmentor):
         self.alpha = alpha
         self.self_loop = self_loop
 
-    def __call__(self, data: HomoData):
+    def __call__(self, data):
         data_tmp = copy.deepcopy(data)
         a = data_tmp.adj_t.to_dense()
         device = a.device
@@ -31,7 +30,7 @@ class ComputeHeat(Augmentor):
         self.t = t
         self.self_loop = self_loop
 
-    def __call__(self, data: HomoData):
+    def __call__(self, data):
         data_tmp = copy.deepcopy(data)
         a = data_tmp.adj_t.to_dense()
         device = a.device

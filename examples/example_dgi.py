@@ -1,5 +1,5 @@
 from torch_geometric.loader import DataLoader
-from src.datasets import Planetoid
+from torch_geometric.datasets import Planetoid
 from src.transforms import NormalizeFeatures, GCNNorm, Edge2Adj, Compose
 from src.methods import DGI, DGIEncoder
 from src.trainer import SimpleTrainer

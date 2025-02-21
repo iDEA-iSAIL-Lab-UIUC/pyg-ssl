@@ -5,7 +5,7 @@ import torch_geometric.transforms as T
 from torch_geometric.loader import DataLoader
 
 from src.methods.gca import GCA_Encoder, GRACE
-from src.datasets import WikiCS, Amazon, Coauthor
+from torch_geometric.datasets import WikiCS, Amazon, Coauthor
 from src.augment.gca_augments import get_activation, get_base_model
 from src.trainer.gca_trainer import GCATrainer
 

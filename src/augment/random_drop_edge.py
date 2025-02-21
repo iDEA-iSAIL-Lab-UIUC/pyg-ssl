@@ -1,8 +1,6 @@
 from .base import Augmentor
-from src.data import HomoData
 import copy
 import random
-import torch
 
 
 class RandomDropEdge(Augmentor):
@@ -12,7 +10,7 @@ class RandomDropEdge(Augmentor):
         self.is_adj = is_adj
         self.drop_percent = drop_percent
 
-    def __call__(self, data: HomoData, drop_percent=None):
+    def __call__(self, data, drop_percent=None):
         drop_percent = drop_percent if drop_percent else self.drop_percent
         data_tmp = copy.deepcopy(data)
         percent = self.drop_percent / 2

@@ -6,7 +6,6 @@ import torch
 from torch.linalg import inv
 from torch_geometric.data import Data
 from .base import Augmentor
-from src.data import HomoData
 
 class ComputePPR(Augmentor):
     def __init__(self, alpha=0.2, self_loop=True):
@@ -14,7 +13,7 @@ class ComputePPR(Augmentor):
         self.alpha = alpha
         self.self_loop = self_loop
 
-    def __call__(self, data: HomoData):
+    def __call__(self, data):
         data_tmp = copy.deepcopy(data)
         a = data_tmp.adj
         if self.self_loop:
@@ -32,7 +31,7 @@ class ComputeHeat(Augmentor):
         self.t = t
         self.self_loop = self_loop
 
-    def __call__(self, data: HomoData):
+    def __call__(self, data):
         data_tmp = copy.deepcopy(data)
         a = data_tmp.adj
         if self.self_loop:
