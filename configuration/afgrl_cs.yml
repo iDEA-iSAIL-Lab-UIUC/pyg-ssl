@@ -1,5 +1,5 @@
 use_cuda : True
-gpu_idx : 1
+gpu_idx : 0
 model:
   dropout: 0.5 
   n_layers: 2 

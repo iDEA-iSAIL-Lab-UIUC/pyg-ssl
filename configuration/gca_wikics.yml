@@ -1,5 +1,5 @@
 use_cuda : True
-gpu_idx : 1
+gpu_idx : 0
 model:
   out_channels: 256
   activation: prelu
