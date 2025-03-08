@@ -39,6 +39,12 @@ python example_dgi.py
 ### Use our docker image
 We provide a docker image at https://hub.docker.com/r/violet24k/pyg-ssl for users to run the code easily. Our docker image is based on the official PyTorch docker image with pytorch 2.3.1, cuda 12.1 and python 3.10.14.
 
+With Docker installed on your machine, pull our image and start a container by
+```bash
+docker pull violet24k/pyg-ssl
+docker run --gpus all -it -v .:/workspace violet24k/pyg-ssl bash
+```
+
 ### Build from source
 We provide setup.py for users to build the package from source. You can run the following command to build the package.
 ```bash
