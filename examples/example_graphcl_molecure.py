@@ -19,12 +19,9 @@ device = torch.device("cuda:{}".format(config.gpu_idx) if torch.cuda.is_availabl
 
 # data
 # -------------------- Data --------------------
-print(os.path.dirname(os.path.realpath(__file__)))
-current_folder = os.path.abspath('')
-print(current_folder)
-path = os.path.join(os.path.dirname(os.path.realpath(__file__)), config.dataset.root, config.dataset.name)
+path = os.path.join(os.path.dirname(os.path.realpath(__file__)), config.dataset.root)
 if config.dataset.name in ['IMDB-B', 'IMDB-M', 'mutag', 'COLLAB', 'PROTEINS']:
-    dataset = TUDataset(path, name=config.dataset.name)
+    dataset = TUDataset(path, name=config.dataset.name.upper())
 else:
     raise NotImplementedError
 data_loader = DataLoader(dataset, batch_size=config.dataset.batch_size)

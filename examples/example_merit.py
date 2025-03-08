@@ -29,7 +29,6 @@ elif data_name=="wikics": #82.0109
     imputer = SimpleImputer()
     dataset[0].x = torch.tensor(imputer.fit_transform(dataset[0].x))
 
-dataset = Amazon(root="pyg_data", name="photo", pre_transform=pre_transforms)
 data_loader = DataLoader(dataset)
 data = dataset.data
 

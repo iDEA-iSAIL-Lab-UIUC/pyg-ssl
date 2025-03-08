@@ -28,7 +28,7 @@ encoder = GCA_Encoder(in_channels=dataset.num_features, out_channels=256, activa
 method = GRACE(encoder=encoder, loss_function=None, num_hidden=256, num_proj_hidden=32, tau=0.4)
 
 # ---> train
-trainer = GCATrainer(method=method, data_loader=data_loader, drop_scheme='degree', dataset_name='WikiCS', device="cuda:1", n_epochs=1000)
+trainer = GCATrainer(method=method, data_loader=data_loader, drop_scheme='degree', dataset_name='WikiCS', device="cuda:0", n_epochs=1000)
 trainer.train()
 
 # ---> evaluation
