@@ -159,7 +159,5 @@ datasets/dblp
 test.ipynb
 *.pkl
 
-data_/
-data/
 datasets/
 wikics/
