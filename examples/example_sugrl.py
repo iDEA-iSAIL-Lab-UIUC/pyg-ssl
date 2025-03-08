@@ -24,7 +24,7 @@ data_name = config['dataset']
 if data_name=="cora":
     dataset = Planetoid(root="pyg_data", name="cora", pre_transform=pre_transforms)
 if data_name=="photo": #92.9267
-    dataset = Amazon(root="pyg_data", name="photo", pre_transform=pre_transforms) 
+    dataset = Amazon(root="pyg_data", name="photo", pre_transform=pre_transforms)
 elif data_name=="coauthor": # 92.0973
     dataset = Coauthor(root="pyg_data", name='cs', transform=pre_transforms)
 elif data_name=="wikics": #82.0109
@@ -34,7 +34,8 @@ elif data_name=="wikics": #82.0109
     imputer = SimpleImputer()
     dataset[0].x = torch.tensor(imputer.fit_transform(dataset[0].x))
 
-
+if not hasattr(dataset.data, 'adj_t'):
+    dataset = add_adj_t(dataset)
 
 data_loader = DataLoader(dataset)
 data = dataset.data

@@ -59,8 +59,8 @@ python
 ```
 Then you can run the example scripts in the root directory of this repository.
 
-### Install from pip
-We are preparing the pip package and will release it soon.
+<!-- ### Install from pip
+We are preparing the pip package and will release it soon. -->
 
 
 ## Cite
