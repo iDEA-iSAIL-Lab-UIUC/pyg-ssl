@@ -1,4 +1,4 @@
-# pyg-ssl
+# PyG-SSL: A Graph Self-Supervised Learning Toolkit
 
 **[Documentation](https://pygssl-tutorial.readthedocs.io/en/latest/index.html)** | **[Paper](https://arxiv.org/abs/2412.21151)**
 
