@@ -72,29 +72,6 @@ def mask_edge(graph, mask_prob):
     mask_idx = masks.nonzero().squeeze(1)
     return mask_idx
 
-#
-# def drop_edge(graph, drop_rate, return_edges=False):
-#     if drop_rate <= 0:
-#         return graph
-#
-#     n_node = graph.num_nodes()
-#     edge_mask = mask_edge(graph, drop_rate)
-#     src = graph.edges()[0]
-#     dst = graph.edges()[1]
-#
-#     nsrc = src[edge_mask]
-#     ndst = dst[edge_mask]
-#
-#     ng = dgl.graph((nsrc, ndst), num_nodes=n_node)
-#     ng = ng.add_self_loop()
-#
-#     dsrc = src[~edge_mask]
-#     ddst = dst[~edge_mask]
-#
-#     if return_edges:
-#         return ng, (dsrc, ddst)
-#     return ng
-
 def create_norm(name):
     if name == "layernorm":
         return nn.LayerNorm
@@ -158,34 +135,8 @@ class GAT(nn.Module):
                 feat_drop, attn_drop, negative_slope, last_residual, activation=last_activation, norm=last_norm,
                 concat_out=concat_out))
 
-        # if norm is not None:
-        #     self.norms = nn.ModuleList([
-        #         norm(num_hidden * nhead)
-        #         for _ in range(num_layers - 1)
-        #     ])
-        #     if self.concat_out:
-        #         self.norms.append(norm(num_hidden * nhead))
-        # else:
-        #     self.norms = None
-
         self.head = nn.Identity()
 
-    # def forward(self, g, inputs):
-    #     h = inputs
-    #     for l in range(self.num_layers):
-    #         h = self.gat_layers[l](g, h)
-    #         if l != self.num_layers - 1:
-    #             h = h.flatten(1)
-    #             if self.norms is not None:
-    #                 h = self.norms[l](h)
-    #     # output projection
-    #     if self.concat_out:
-    #         out = h.flatten(1)
-    #         if self.norms is not None:
-    #             out = self.norms[-1](out)
-    #     else:
-    #         out = h.mean(1)
-    #     return self.head(out)
 
     def forward(self, g, inputs, return_hidden=False):
         h = inputs
@@ -252,10 +203,6 @@ class GATConv(nn.Module):
             self.register_buffer('res_fc', None)
         self.reset_parameters()
         self.activation = activation
-        # if norm is not None:
-        #     self.norm = norm(num_heads * out_feats)
-        # else:
-        #     self.norm = None
 
         self.norm = norm
         if norm is not None:
@@ -344,8 +291,6 @@ class GATConv(nn.Module):
             # compute edge attention, el and er are a_l Wh_i and a_r Wh_j respectively.
             graph.apply_edges(fn.u_add_v('el', 'er', 'e'))
             e = self.leaky_relu(graph.edata.pop('e'))
-            # e[e == 0] = -1e3
-            # e = graph.edata.pop('e')
             # compute softmax
             graph.edata['a'] = self.attn_drop(edge_softmax(graph, e))
             # message passing
@@ -419,16 +364,6 @@ class GCN(nn.Module):
             # output projection
             self.gcn_layers.append(GraphConv(
                 num_hidden, out_dim, residual=last_residual, activation=last_activation, norm=last_norm))
-
-        # if norm is not None:
-        #     self.norms = nn.ModuleList([
-        #         norm(num_hidden)
-        #         for _ in range(num_layers - 1)
-        #     ])
-        #     if not encoding:
-        #         self.norms.append(norm(out_dim))
-        # else:
-        #     self.norms = None
         self.norms = None
         self.head = nn.Identity()
 
@@ -477,14 +412,6 @@ class GraphConv(nn.Module):
                 self.res_fc = nn.Identity()
         else:
             self.register_buffer('res_fc', None)
-
-        # if norm == "batchnorm":
-        #     self.norm = nn.BatchNorm1d(out_dim)
-        # elif norm == "layernorm":
-        #     self.norm = nn.LayerNorm(out_dim)
-        # else:
-        #     self.norm = None
-
         self.norm = norm
         if norm is not None:
             self.norm = norm(out_dim)
@@ -498,10 +425,6 @@ class GraphConv(nn.Module):
     def forward(self, graph, feat):
         with graph.local_scope():
             aggregate_fn = fn.copy_src('h', 'm')
-            # if edge_weight is not None:
-            #     assert edge_weight.shape[0] == graph.number_of_edges()
-            #     graph.edata['_edge_weight'] = edge_weight
-            #     aggregate_fn = fn.u_mul_e('h', '_edge_weight', 'm')
 
             # (BarclayII) For RGCN on heterogeneous graphs we need to support GCN on bipartite.
             feat_src, feat_dst = expand_as_pair(feat, graph)
@@ -512,14 +435,6 @@ class GraphConv(nn.Module):
             norm = torch.reshape(norm, shp)
             feat_src = feat_src * norm
 
-            # if self._in_feats > self._out_feats:
-            #     # mult W first to reduce the feature size for aggregation.
-            #     # if weight is not None:
-            #         # feat_src = th.matmul(feat_src, weight)
-            #     graph.srcdata['h'] = feat_src
-            #     graph.update_all(aggregate_fn, fn.sum(msg='m', out='h'))
-            #     rst = graph.dstdata['h']
-            # else:
             # aggregate first then mult W
             graph.srcdata['h'] = feat_src
             graph.update_all(aggregate_fn, fn.sum(msg='m', out='h'))
@@ -527,7 +442,6 @@ class GraphConv(nn.Module):
 
             rst = self.fc(rst)
 
-            # if self._norm in ['right', 'both']:
             degs = graph.in_degrees().float().clamp(min=1)
             norm = torch.pow(degs, -0.5)
             shp = norm.shape + (1,) * (feat_dst.dim() - 1)
@@ -668,7 +582,6 @@ class GINConv(nn.Module):
 
     def forward(self, graph, feat):
         with graph.local_scope():
-            # aggregate_fn = fn.copy_src('h', 'm')
             aggregate_fn = fn.copy_u('h', 'm')
 
             feat_src, feat_dst = expand_as_pair(feat, graph)

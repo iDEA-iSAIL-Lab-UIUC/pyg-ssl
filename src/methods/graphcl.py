@@ -32,18 +32,12 @@ class GraphCL(BaseMethod):
         pos_batch, neg_batch, neg_batch2 = batch
         h_pos = self.encoder(pos_batch, pos_batch.adj_t)
         if self.augment_type == 'edge':
-            # h_neg1 = self.encoder(pos_batch, neg_batch.adj_t.to(pos_batch.batch.device))
-            # h_neg2 = self.encoder(pos_batch, neg_batch2.adj_t.to(pos_batch.batch.device))
             h_neg1 = self.encoder(pos_batch, neg_batch.edge_index)
             h_neg2 = self.encoder(pos_batch, neg_batch2.edge_index)
         elif self.augment_type == 'mask':
-            # h_neg1 = self.encoder(neg_batch, pos_batch.adj_t)
-            # h_neg2 = self.encoder(neg_batch2, pos_batch.adj_t)
             h_neg1 = self.encoder(neg_batch, pos_batch.edge_index)
             h_neg2 = self.encoder(neg_batch2, pos_batch.edge_index)
         elif self.augment_type == 'node' or self.augment_type == 'subgraph':
-            # h_neg1 = self.encoder(neg_batch, neg_batch.adj_t.to(pos_batch.batch.device))
-            # h_neg2 = self.encoder(neg_batch2, neg_batch2.adj_t.to(pos_batch.batch.device))
             h_neg1 = self.encoder(neg_batch, neg_batch.edge_index)
             h_neg2 = self.encoder(neg_batch2, neg_batch2.edge_index)
         else:
@@ -90,7 +84,6 @@ class GraphCLEncoder(torch.nn.Module):
                  in_channels: int,
                  hidden_channels: int = 512,
                  act: torch.nn = torch.nn.PReLU(),
-                 num_layers=1,
                  bias=True):
         super(GraphCLEncoder, self).__init__()
         self.dim_out = hidden_channels

@@ -9,9 +9,6 @@ from .base import BaseMethod
 from torch_geometric.typing import *
 
 
-
-
-
 class MLP(nn.Module):
 
     def __init__(self, inp_size, outp_size, hidden_size):
@@ -47,7 +44,6 @@ class GraphEncoder(nn.Module):
 
     
 class EMA():
-    
     def __init__(self, beta):
         super().__init__()
         self.beta = beta
@@ -90,7 +86,6 @@ def contrastive_loss_wo_cross_view(h1, h2, z):
 
 
 class Merit(BaseMethod):
-    
     def __init__(self, 
                  encoder: torch.nn.Module,
                  data,
@@ -130,10 +125,6 @@ class Merit(BaseMethod):
         adj = self.data.adj_t.to_dense()
         diff = gdc(sp.csr_matrix(np.matrix(adj)), alpha=self.config["alpha"], eps=0.0001)
         diff =  torch.from_numpy(diff)
-        # diff = batch_neg.adj_t.to_dense()
-        ft_size = x_pos.shape[1]
-
-        
         idx = np.random.randint(0, adj.shape[-1] - self.sample_size + 1)
         ba = adj[idx: idx + self.sample_size, idx: idx + self.sample_size]
         bd = diff[idx: idx + self.sample_size, idx: idx + self.sample_size]
@@ -141,25 +132,6 @@ class Merit(BaseMethod):
         features = x_pos.squeeze(0)
         bf = features[idx: idx + self.sample_size]
         ba = sp.csr_matrix(np.matrix(ba))
-        # bf = sp.csr_matrix(np.matrix(bf))
-
-        # lbl_1 = torch.ones(batch_size, self.sample_size * 2)
-        # lbl_2 = torch.zeros(batch_size, self.sample_size * 2)
-        # lbl = torch.cat((lbl_1, lbl_2), 1)
-
-        # idx = np.random.randint(0, adj.shape[-1] - self.sample_size + 1, batch_size)
-        # ba = torch.zeros((batch_size, self.sample_size, self.sample_size))
-        # bd = torch.zeros((batch_size, self.sample_size, self.sample_size))
-        # bf = torch.zeros((batch_size, self.sample_size, ft_size))
-        # for i in range(len(idx)):
-        #     ba[i] = adj[idx[i]: idx[i] + self.sample_size, idx[i]: idx[i] + self.sample_size]
-        #     bd[i] = diff[idx[i]: idx[i] + self.sample_size, idx[i]: idx[i] + self.sample_size]
-        #     bf[i] = x_pos[idx[i]: idx[i] + self.sample_size]
-
-        # if self.is_sparse:
-        #     ba = ba.to_sparse()
-        #     bd = bd.to_sparse()
-
         aug_adj1 = aug_random_edge(ba, drop_percent=self.drop_edge_rate_1)
         aug_adj2 = bd
         aug_features1 = aug_feature_dropout(bf, drop_percent=self.drop_feature_rate_1)
@@ -202,8 +174,6 @@ class Merit(BaseMethod):
     
     def get_embs(self, data: Tensor, adj: Adj, is_sparse: bool = True):
         embs,_ = self.online_encoder(data.x,adj.to_torch_sparse_coo_tensor(), is_sparse)
-        # h_p = self.encoder_2(x, adj.to_torch_sparse_coo_tensor(), is_sparse)
-        
         return embs
     
 
@@ -399,7 +369,6 @@ def delete_row_col(input_matrix, drop_list, only_row=False):
 
 def gdc(A: sp.csr_matrix, alpha: float, eps: float):
     N = A.shape[0]
-    # print(A)
     A_loop = sp.eye(N) + A
     D_loop_vec = A_loop.sum(0).A1
     D_loop_vec_invsqrt = 1 / np.sqrt(D_loop_vec)

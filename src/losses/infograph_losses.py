@@ -70,9 +70,6 @@ class AdjLoss(torch.nn.Module):
 
         res = torch.sigmoid((torch.mm(l_enc, l_enc.t())))
         res = (1-mask) * res
-        # print(res.shape, adj.shape)
-        # input()
-
         return self.loss(res, adj)
 
 

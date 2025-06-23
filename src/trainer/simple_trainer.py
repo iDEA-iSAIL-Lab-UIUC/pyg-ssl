@@ -29,17 +29,12 @@ class SimpleTrainer(BaseTrainer):
                          data_loader=data_loader,
                          save_root=save_root,
                          device=device)
-        # if config:
-        #     self.optimizer = torch.optim.Adam(self.method.parameters(), lr, weight_decay=config.optim.weight_decay)
 
         self.optimizer = torch.optim.AdamW(self.method.parameters(), lr, weight_decay=weight_decay)
         self.dataset = dataset
         self.n_epochs = n_epochs
         self.patience = patience
         self.device = device
-        # scheduler = lambda epoch: epoch / 1000 if epoch < 1000 \
-        #             else ( 1 + np.cos((epoch-1000) * np.pi / (n_epochs - 1000))) * 0.5
-        # self.scheduler = torch.optim.lr_scheduler.LambdaLR(self.optimizer, lr_lambda = scheduler)
         self.early_stopper = EarlyStopper(patience=self.patience)
 
     def train(self):
@@ -57,24 +52,12 @@ class SimpleTrainer(BaseTrainer):
                 data = self.push_batch_to_device(data)
                 loss = self.method(data)
 
-
                 loss.backward()
                 self.optimizer.step()
-                # self.scheduler.step()
 
             end_time = time.time()
             info = "Epoch {}: loss: {:.4f}, time: {:.4f}s".format(epoch, loss.detach().cpu().numpy(), end_time-start_time)
             print(info)
-
-            # # ------------------ Evaluator -------------------
-            # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-            # data_pyg = self.data_loader.dataset.data.to(device)
-            # y, embs = self.method.get_embs(self.data_loader)
-            # data_pyg.x = embs
-            # from src.evaluation import LogisticRegression
-            # lg = LogisticRegression(lr=0.001, weight_decay=0, max_iter=100, n_run=1, device=device)
-            # lg(embs=embs, dataset=data_pyg)
-
 
             self.early_stopper.update(loss)  # update the status
             if self.early_stopper.save:
@@ -92,5 +75,4 @@ class SimpleTrainer(BaseTrainer):
 
     def check_dataloader(self, dataloader):
         assert hasattr(dataloader, 'x'), 'The dataset does not have attributes x.'
-        # assert hasattr(dataloader, 'train_mask'), 'T'
-        # return 0
+

@@ -27,8 +27,6 @@ class InfoGraph(BaseMethod):
                  hidden_channels: int,
                  readout: Union[Callable, torch.nn.Module] = AvgReadout(),
                  loss_function: Optional[torch.nn.Module] = LocalGlobalLoss(),
-                 # alpha=0.5,
-                 # beta=1.,
                  gamma=.1,
                  num_layers=1,
                  prior=False) -> None:
@@ -37,8 +35,6 @@ class InfoGraph(BaseMethod):
 
         self.readout = readout
         self.sigmoid = torch.nn.Sigmoid()
-        # self.alpha = alpha
-        # self.beta = beta
         self.gamma = gamma
         self.prior = prior
         self.embedding_dim = hidden_channels * num_layers
@@ -135,23 +131,6 @@ class Encoder(torch.nn.Module):
         x = torch.cat(xpool, 1)
         return x, torch.cat(xs, 1)
 
-    # def get_embeddings(self, loader):
-    #     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    #     ret = []
-    #     y = []
-    #     with torch.no_grad():
-    #         for data in loader:
-    #             data.to(device)
-    #             x, edge_index, batch = data.x, data.edge_index, data.batch
-    #             if x is None:
-    #                 x = torch.ones((batch.shape[0], 1)).to(device)
-    #             x, _ = self.forward(x, edge_index, batch)
-    #             ret.append(x.cpu().numpy())
-    #             y.append(data.y.cpu().numpy())
-    #     ret = np.concatenate(ret, 0)
-    #     y = np.concatenate(y, 0)
-    #     return ret, y
-
 
 class PriorDiscriminator(nn.Module):
     def __init__(self, input_dim):
@@ -169,9 +148,6 @@ class PriorDiscriminator(nn.Module):
 class MLP(nn.Module):
     def __init__(self, input_dim):
         super().__init__()
-        # self.c0 = nn.Conv1d(input_dim, 512, kernel_size=1)
-        # self.c1 = nn.Conv1d(512, 512, kernel_size=1)
-        # self.c2 = nn.Conv1d(512, 1, kernel_size=1)
         self.block = nn.Sequential(
             nn.Linear(input_dim, input_dim),
             nn.ReLU(),
@@ -181,9 +157,6 @@ class MLP(nn.Module):
             nn.ReLU()
         )
         self.linear_shortcut = nn.Linear(input_dim, input_dim)
-        # self.c0 = nn.Conv1d(input_dim, 512, kernel_size=1, stride=1, padding=0)
-        # self.c1 = nn.Conv1d(512, 512, kernel_size=1, stride=1, padding=0)
-        # self.c2 = nn.Conv1d(512, 1, kernel_size=1, stride=1, padding=0)
 
     def forward(self, x):
         return self.block(x) + self.linear_shortcut(x)

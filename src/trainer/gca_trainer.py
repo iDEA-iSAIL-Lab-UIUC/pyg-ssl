@@ -49,9 +49,6 @@ class GCATrainer(BaseTrainer):
 
     def train(self):
         self.method = self.method.to(self.device)
-        # self.data_loader = self.data_loader.to(self.device)
-
-
         for epoch in range(self.n_epochs):
             start_time = time.time()
 
@@ -131,7 +128,6 @@ class GCATrainer(BaseTrainer):
                 loss.backward()
                 self.optimizer.step()
 
-                # print loss
                 end_time = time.time()
                 print("Epoch {}: loss: {:.4f}, time: {:.4f}s".format(epoch, loss, end_time - start_time))
 

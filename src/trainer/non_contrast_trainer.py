@@ -31,17 +31,11 @@ class NonContrastTrainer(BaseTrainer):
                          data_loader=data_loader,
                          save_root=save_root,
                          device=device)
-        # if config:
-        #     self.optimizer = torch.optim.Adam(self.method.parameters(), lr, weight_decay=config.optim.weight_decay)
-
         self.optimizer = torch.optim.AdamW(self.method.parameters(), lr, weight_decay=weight_decay)
         self.dataset = dataset
         self.n_epochs = n_epochs
         self.patience = patience
-        self.device = device
-        # scheduler = lambda epoch: epoch / 1000 if epoch < 1000 \
-        #             else ( 1 + np.cos((epoch-1000) * np.pi / (n_epochs - 1000))) * 0.5
-        # self.scheduler = torch.optim.lr_scheduler.LambdaLR(self.optimizer, lr_lambda = scheduler)
+        self.device = devic
         self.use_ema = use_ema
         if self.use_ema:
             self.ema_updater = EMA(moving_average_decay, n_epochs)
@@ -63,7 +57,6 @@ class NonContrastTrainer(BaseTrainer):
 
                 loss.backward()
                 self.optimizer.step()
-                # self.scheduler.step()
                 if self.use_ema:
                     update_moving_average(self.ema_updater, self.method.teacher_encoder, self.method.encoder)
 

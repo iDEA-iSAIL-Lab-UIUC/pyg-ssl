@@ -19,18 +19,6 @@ class BaseMethod(torch.nn.Module):
         emb_augment (OptAugment): embedding augment to be used.
     """
 
-    # def __init__(self,
-    #              encoder: torch.nn.Module,
-    #              loss_function: Union[Callable, torch.nn.Module],
-    #              data_augment: OptAugment = None,
-    #              emb_augment: OptAugment = None):
-    #     super().__init__()
-
-    #     self.encoder = encoder
-    #     self.loss_function = loss_function
-    #     self.data_augment = data_augment
-    #     self.emb_augment = emb_augment
-
     def __init__(self,
                  encoder: torch.nn.Module,
                  device: str="cuda",

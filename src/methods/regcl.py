@@ -367,9 +367,7 @@ class ReGCL(torch.nn.Module):
         return ret
     
     def save(self, model_save_path):
-        # print('save_path:',model_save_path)
         torch.save(self.state_dict(), model_save_path)
-        # print('save_success')
         
         
     def evaluation(self, embeddings, y, name,device,data,learning_rate2,weight_decay2):
@@ -378,7 +376,6 @@ class ReGCL(torch.nn.Module):
         Y =  y.detach().cpu().numpy()
 
         citegraph = ['Cora', 'CiteSeer', 'PubMed',]
-        cograph = ['DBLP', 'computers', 'photo','CS', 'Physics']
         num_class = {
             'Cora': 7,
             'CiteSeer': 6,
@@ -411,12 +408,6 @@ class ReGCL(torch.nn.Module):
             val_labels = Y[val_idx]
             test_labels = Y[test_idx]
 
-        # if name in cograph:
-        #     train_embs, test_embs, train_labels, test_labels = train_test_split(X, Y,
-        #                                                         test_size=0.8)
-
-        #     train_embs,val_embs,train_labels,val_labels  = train_test_split(train_embs,train_labels,
-        #                                                         test_size=0.5)
         train_embs= th.tensor(train_embs).to(device)
         test_embs = th.tensor(test_embs).to(device)
         val_embs = th.tensor(val_embs).to(device)
@@ -435,12 +426,11 @@ class ReGCL(torch.nn.Module):
         best_val_acc = 0
         eval_acc = 0
 
-        for epoch in range(2000):
+        for _ in range(2000):
             logreg.train()
             opt.zero_grad()
             logits = logreg(train_embs)
             preds = th.argmax(logits, dim=1)
-            train_acc = th.sum(preds == train_labels).float() / train_labels.shape[0]
             loss = loss_fn(logits, train_labels)
             loss.backward()
             opt.step()

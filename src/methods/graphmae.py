@@ -137,7 +137,6 @@ class GraphMAE(BaseMethod):
     def encoding_mask_noise(self, g, x, mask_rate=0.3):
         num_nodes = g.num_nodes()
         perm = torch.randperm(num_nodes, device=x.device)
-        num_mask_nodes = int(mask_rate * num_nodes)
 
         # random masking
         num_mask_nodes = int(mask_rate * num_nodes)
@@ -276,9 +275,7 @@ class GraphMAE(BaseMethod):
             clf.fit(x_train, y_train)
 
             preds = clf.predict(x_test)
-            # f1 = f1_score(y_test, preds, average="micro")
             test_acc = accuracy_score(y_test, preds)
-            # test_acc = (torch.sum(preds == y_test).float() / y_test.shape[0]).detach().cpu().numpy()
             result.append(test_acc)
         test_acc = np.mean(result)
         test_std = np.std(result)
@@ -317,7 +314,6 @@ def load_graph_classification_dataset(dataset_name, raw_dir=None, deg4feat=False
             for d, n in Counter(degrees).items():
                 if d > MAX_DEGREES:
                     oversize += n
-            # print(f"N > {MAX_DEGREES}, #NUM: {oversize}, ratio: {oversize/sum(degrees):.8f}")
             feature_dim = min(feature_dim, MAX_DEGREES)
 
             feature_dim += 1

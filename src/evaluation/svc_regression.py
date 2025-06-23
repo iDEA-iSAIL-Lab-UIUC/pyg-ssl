@@ -83,9 +83,6 @@ class SVCRegression(BaseEvaluator):
 
     def single_run(self, embs, labels, train_mask, val_mask, test_mask) -> (np.ndarray, np.ndarray):
         val_accs, test_accs = [], []
-        # emb_dim, num_class = embs.shape[1], labels.unique().shape[0]
-
-        # embs, labels = embs.detach().cpu().numpy(), labels.detach().cpu().numpy()
         if self.search:
             params = {'C':[0.001, 0.01,0.1,1,10,100,1000]}
             classifier = GridSearchCV(SVC(C=self.C, kernel=self.kernel, degree=self.degree, gamma=self.gamma, coef0=self.coef0, shrinking=self.shirinking, probability=self.probability,

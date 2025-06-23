@@ -14,7 +14,6 @@ __all__ = [
     "augment_bgrl_2",
 ]
 
-# augment_dgi = DataShuffle(is_x=True)
 augment_dgi = ShuffleNode()
 augment_mvgrl_ppr = ComputePPR()
 augment_mvgrl_heat = ComputeHeat()

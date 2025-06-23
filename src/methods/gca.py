@@ -51,7 +51,6 @@ class GCA_Encoder(torch.nn.Module):
 # class GRACE(torch.nn.Module):
 class GRACE(BaseMethod):
     def __init__(self,
-                 # encoder: GCA_Encoder,
                  encoder: torch.nn.Module,
                  loss_function: None,
                  num_hidden: int,
@@ -59,7 +58,6 @@ class GRACE(BaseMethod):
                  tau: float = 0.5):
 
         super(GRACE, self).__init__(encoder=encoder, loss_function=loss_function)
-        # self.encoder: GCA_Encoder = encoder
         self.encoder = encoder
         self.tau: float = tau
 

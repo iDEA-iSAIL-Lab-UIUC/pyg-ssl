@@ -16,7 +16,6 @@ class AugmentSubgraph(Augmentor):
         drop_percent = drop_percent if drop_percent else self.drop_percent
         data_tmp = copy.deepcopy(data)
         input_adj = data_tmp.adj_t.to_dense()
-        # input_adj = from_scipy_sparse_matrix(data_tmp.edge_index)
         input_fea = data_tmp.x.squeeze(0)
         node_num = input_fea.shape[0]
 

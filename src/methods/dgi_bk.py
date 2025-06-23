@@ -44,8 +44,6 @@ class DGI(BaseMethod):
         s = self.sigmoid(s)
 
         s = s.expand_as(h_pos)
-        # pos_pairs = torch.stack([s, h_pos], -1)
-        # neg_pairs = torch.stack([s, h_neg], -1)
 
         loss = self.loss_function(x=s, y=h_pos, x_ind=s, y_ind=h_neg)
         return loss

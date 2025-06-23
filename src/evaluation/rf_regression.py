@@ -90,9 +90,7 @@ class RandomForestClassifier(BaseEvaluator):
 
     def single_run(self, embs, labels, train_mask, val_mask, test_mask) -> (np.ndarray, np.ndarray):
         val_accs, test_accs = [], []
-        # emb_dim, num_class = embs.shape[1], labels.unique().shape[0]
 
-        # embs, labels = embs.detach().cpu().numpy(), labels.detach().cpu().numpy()
         if self.search:
             params = {'C':[0.001, 0.01,0.1,1,10,100,1000]}
             classifier = GridSearchCV(rf_cl(n_estimators=self.n_estimators, criterion=self.criterion, max_depth=self.max_depth, min_samples_split=self.min_samples_split, min_samples_leaf=self.min_samples_leaf, min_weight_fraction_leaf=self.min_weight_fraction_leaf, 

@@ -52,7 +52,6 @@ class TSNEVisulization(BaseEvaluator):
         TODO: maybe we need to return something.
         """
         print(self.method)
-        # tsne = TSNE(random_state=0, init='pca', n_components=3)
         tsne = TSNE(n_components=self.n_components, perplexity=self.perplexity, early_exaggeration=self.early_exaggeration, 
                     learning_rate=self.learning_rate, n_iter=self.n_iter, n_iter_without_progress=self.n_iter_without_progress, min_grad_norm=self.min_grad_norm, metric=self.metric, 
                     init=self.init, verbose=self.verbose, random_state=self.random_state, method=self.method, n_jobs=self.n_jobs)

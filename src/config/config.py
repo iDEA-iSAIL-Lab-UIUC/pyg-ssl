@@ -13,14 +13,6 @@ from yacs.config import CfgNode as CN
 import torch_geometric.graphgym.register as register
 from torch_geometric.data.makedirs import makedirs
 
-# try:  # Define global config object
-#     from yacs.config import CfgNode as CN
-#     cfg = CN()
-# except ImportError:
-#     cfg = None
-#     warnings.warn("Could not define global config object. Please install "
-#                   "'yacs' via 'pip install yacs' in order to use GraphGym")
-
 
 def set_cfg(cfg):
     r'''

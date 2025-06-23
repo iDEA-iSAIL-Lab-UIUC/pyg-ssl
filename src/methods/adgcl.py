@@ -21,7 +21,6 @@ class SUGRL(Model):
         super().__init__(encoder=encoder)
         self.encoder_1 = encoder[0]
         self.encoder_2 = encoder[1]
-        # self.discriminator = discriminator
         self.read = AvgReadout()
         self.sigmoid = torch.nn.Sigmoid()
 
@@ -30,15 +29,11 @@ class SUGRL(Model):
         h_1 = self.encoder_1(x, adj, is_sparse)
         c_1 = self.read(h_1, msk)
         c_1 = self.sigmoid(c_1)
-
         h_2 = self.encoder_2(x, diff, is_sparse)
         c_2 = self.read(h_2, msk)
         c_2 = self.sigmoid(c_2)
-
         h_3 = self.encoder_1(x_neg, adj, is_sparse)
-
         h_4 = self.encoder_2(x_neg, diff, is_sparse)
-
         ret = self.discriminator(c_1, c_2, h_1, h_2, h_3, h_4, samp_bias1, samp_bias2)
         return ret, h_1, h_2
 

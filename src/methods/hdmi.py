@@ -161,14 +161,6 @@ class HDMIEncoder(nn.Module):
         self.att_act1 = nn.Tanh()
         self.att_act2 = nn.Softmax(dim=-1)
 
-        # for m in self.modules():
-        #     self.weights_init(m)
-    # def weights_init(self, m):
-        # if isinstance(m, nn.Linear):
-        #     torch.nn.init.xavier_uniform_(m.weight.data)
-        #     if m.bias is not None:
-        #         m.bias.data.fill_(0.0)
-
     def combine_att(self, h_list):
         h_combine_list = []
         for i, h in enumerate(h_list):

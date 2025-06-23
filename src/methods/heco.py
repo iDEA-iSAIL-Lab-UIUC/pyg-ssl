@@ -9,16 +9,7 @@ from torch_geometric.data.datapipes import functional_transform
 from torch_geometric.transforms import BaseTransform
 from .utils import AvgReadout
 from typing import Optional, Callable, Union
-# TODO add comment about Args
 
-
-
-
-
-
-# Dataset Transform
-# Transform of heterogeneous dataset needs to be written dataset-specifically, since the attribute names might differ.
-# ----------------- Transform ------------------
 @functional_transform('heco_transform_ssl')
 class HeCoDBLPTransform(BaseTransform):
 
@@ -196,11 +187,6 @@ class Sc_encoder(nn.Module):
         return z_sc
 
 
-
-
-
-
-
 # Meta-path View Guided Encoder
 class GCN(nn.Module):
     def __init__(self, in_ft, out_ft, bias=True):
@@ -277,8 +263,6 @@ class Mp_encoder(nn.Module):
         return z_mp
 
 
-
-
 # Contrast Loss Function
 class Contrast(nn.Module):
     def __init__(self, hidden_dim, tau, lam):
@@ -314,9 +298,6 @@ class Contrast(nn.Module):
         matrix_sc2mp = matrix_sc2mp / (torch.sum(matrix_sc2mp, dim=1).view(-1, 1) + 1e-8)
         lori_sc = -torch.log(matrix_sc2mp.mul(pos.to_dense()).sum(dim=-1)).mean()
         return self.lam * lori_mp + (1 - self.lam) * lori_sc
-
-
-
 
 
 # The HeCo Algorithm
@@ -362,7 +343,6 @@ class HeCo(BaseMethod):
         z_sc = self.sc(h_all, nei_index)
         loss = self.loss_function(z_mp, z_sc, pos)
         return loss
-    
 
     def get_embs(self, feats, mps):
         for i in range(len(mps)):
@@ -370,7 +350,6 @@ class HeCo(BaseMethod):
         z_mp = F.elu(self.fc_list[0](feats[0])).to(self.device)
         z_mp = self.mp(z_mp, mps)
         return z_mp.detach()
-
 
 
 # Helper Functions
